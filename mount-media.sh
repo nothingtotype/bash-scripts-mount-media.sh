@@ -26,13 +26,14 @@ echo "Found share: $REMOTE_PATH"
 echo "Creating local directory: $REMOTE_PATH"
 sudo mkdir -p "$REMOTE_PATH"
 
-# 4. Change permissions to allow all access
+# 4. Mount the NFS share
+echo "Mounting $SERVER_IP:$REMOTE_PATH to $REMOTE_PATH..."
+sudo mount -t nfs "$SERVER_IP:$REMOTE_PATH" "$REMOTE_PATH"
+
+# 5. Change permissions to allow all access
 echo "Setting permissions to 777..."
 sudo chmod 777 "$REMOTE_PATH"
 
-# 5. Mount the NFS share
-echo "Mounting $SERVER_IP:$REMOTE_PATH to $REMOTE_PATH..."
-sudo mount -t nfs "$SERVER_IP:$REMOTE_PATH" "$REMOTE_PATH"
 
 # Verify mount
 if mountpoint -q "$REMOTE_PATH"; then
